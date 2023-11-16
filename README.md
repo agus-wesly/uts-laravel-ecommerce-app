@@ -40,6 +40,8 @@ DB_PASSWORD=
 #### Run in dev mode & you good to go
 
 ```
-composer install
-npm install
+php artisan serve
+
+// Open this in another terminal
+npm run dev
 ```
