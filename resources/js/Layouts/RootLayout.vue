@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MenuIcon } from "lucide-vue-next";
+import { MenuIcon, ShoppingCart } from "lucide-vue-next";
 import {
     Sheet,
     SheetContent,
@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/sheet";
 import CartItem from "@/components/cart-item.vue";
 import { Button } from "@/components/ui/button";
+import { GithubIcon } from "lucide-vue-next";
+import { Link } from "@inertiajs/vue3";
 
 const products = [
     {
@@ -34,13 +36,13 @@ const products = [
 
 <template>
     <nav
-        class="container max-w-3xl sticky top-0 flex justify-between items-center py-5"
+        class="container max-w-3xl sticky top-0 flex justify-between items-center py-5 bg-white"
     >
-        <h1>My Store</h1>
+        <h1 class="text-2xl font-extrabold">My Store</h1>
 
         <Sheet>
             <SheetTrigger>
-                <MenuIcon />
+                <ShoppingCart />
             </SheetTrigger>
             <SheetContent class="overflow-y-scroll">
                 <SheetHeader class="my-5">
@@ -67,7 +69,20 @@ const products = [
         </Sheet>
     </nav>
 
-    <main class="container max-w-3xl">
+    <main class="container max-w-3xl space-y-5 md:space-y-10 mb-20">
         <slot />
     </main>
+
+    <footer
+        class="container max-w-3xl py-4 border-t mb-4 font-semibold flex justify-between items-center"
+    >
+        <p>© Agus Wesly 2023. All rights reserved</p>
+
+        <a
+            href="https://github.com/agus-wesly/uts-laravel-ecommerce-app"
+            target="_blank"
+        >
+            <GithubIcon />
+        </a>
+    </footer>
 </template>
