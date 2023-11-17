@@ -1,0 +1,35 @@
+<script setup lang="ts">
+defineProps<{
+    product: {
+        id: number;
+        name: string;
+        description: string;
+        url: string;
+        qty: number;
+        price: number;
+    };
+}>();
+</script>
+
+<template>
+    <div class="flex justify-between gap-10">
+        <img :src="product.url" class="aspect-[9/10] object-cover w-28" />
+
+        <div class="flex flex-col gap-5">
+            <h4 class="text-sm font-bold">{{ product.name }}</h4>
+            <p class="text-xs line-clamp-3">{{ product.description }}</p>
+
+            <div class="flex justify-between">
+                <div
+                    class="flex w-20 justify-between items-center border border-border"
+                >
+                    <button class="h-full px-2">-</button>
+                    <span>2</span>
+                    <button class="h-full px-2">+</button>
+                </div>
+
+                <p class="text-sm font-bold">Rp. {{ product.price }}</p>
+            </div>
+        </div>
+    </div>
+</template>

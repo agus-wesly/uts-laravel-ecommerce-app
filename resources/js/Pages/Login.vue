@@ -34,7 +34,7 @@ async function onSubmit(event) {
 </script>
 
 <template>
-    <main class="container mt-10">
+    <main class="container mt-10 max-w-xl">
         <h1 class="mb-10 text-3xl font-[900] text-center">
             Login to your account
         </h1>

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('address');
             $table->integer('total');
+            $table->foreignId('user_id');
             $table->enum('status', ['P', 'S', 'F'])->default('P');
-            $table->timestamp('order_date')->useCurrent();       
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();  
         });
     }
 
