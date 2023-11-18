@@ -2,20 +2,13 @@
 import { Button } from "./ui/button";
 
 defineProps<{
-    product: {
-        id: number;
-        name: string;
-        description: string;
-        url: string;
-        qty: number;
-        price: number;
-    };
+    product: Product;
 }>();
 </script>
 
 <template>
     <article class="flex flex-col gap-4 w-full">
-        <img :src="product.url" class="w-full h-[158px] object-cover" />
+        <img :src="product.product_url" class="w-full h-[158px] object-cover" />
 
         <div class="flex flex-col gap-4">
             <h6 class="text-sm">{{ product.name }}</h6>
