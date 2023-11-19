@@ -36,7 +36,7 @@ const products = [
 
 <template>
     <nav
-        class="container max-w-3xl sticky top-0 flex justify-between items-center py-5 bg-white"
+        class="container max-w-3xl sticky z-[5] top-0 flex justify-between items-center py-5 bg-white"
     >
         <h1 class="text-2xl font-extrabold">My Store</h1>
 
@@ -69,7 +69,9 @@ const products = [
         </Sheet>
     </nav>
 
-    <main class="container max-w-3xl space-y-5 md:space-y-10 mb-20">
+    <main
+        class="container max-w-3xl space-y-5 md:space-y-10 mb-20 min-h-[90vh] overflow-x-hidden"
+    >
         <slot />
     </main>
 
