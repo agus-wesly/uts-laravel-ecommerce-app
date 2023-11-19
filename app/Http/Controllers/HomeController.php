@@ -12,19 +12,19 @@ class HomeController extends Controller
         
         $product1 = Product::where([
             'type_id' => 1
-        ])->get();
+        ])->with('type')->get();
         $product2 = Product::where([
             'type_id' =>2 
-        ])->get();
+        ])->with('type')->get();
         $product3 = Product::where([
             'type_id' =>3 
-        ])->get();
+        ])->with('type')->get();
         $product4 = Product::where([
             'type_id' =>4 
-        ])->get();
+        ])->with('type')->get();
         $product5 = Product::where([
             'type_id' => 5
-        ])->get();
+        ])->with('type')->get();
 
 
         return Inertia::render('Home', [

@@ -6,4 +6,10 @@ type Product = {
     qty: number;
     price: number;
     type_id: number;
+    type: TypeProduct;
+};
+
+type TypeProduct = {
+    id: number;
+    name: string;
 };

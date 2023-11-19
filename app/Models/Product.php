@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $with = ['type'];
+
     public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetails::class);
@@ -21,4 +23,6 @@ class Product extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+   
 }
