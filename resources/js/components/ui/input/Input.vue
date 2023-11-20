@@ -39,6 +39,7 @@ const modelValue = useVModel(props, "modelValue", emits, {
                     $attrs.class ?? ''
                 )
             "
+            v-bind="$attrs"
         />
 
         <button
