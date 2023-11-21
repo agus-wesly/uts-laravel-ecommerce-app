@@ -19,6 +19,19 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import Button from "@/components/ui/button/Button.vue";
 import { router } from "@inertiajs/vue3";
 import useUser from "@/composable/useUser";
@@ -45,6 +58,7 @@ const products = [
 ];
 
 const inputValue = ref("");
+const openModal = ref(false);
 
 const hrefSearch = computed(() => {
     if (!inputValue.value) return "#";
@@ -129,14 +143,40 @@ const { user } = useUser();
                         >
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link
-                            href="/logout"
-                            class="text-xs cursor-pointer w-full text-red-500"
-                            >Logout</Link
+                        <button
+                            @click="openModal = true"
+                            variant="outline"
+                            class="text-xs text-left cursor-pointer w-full text-red-500"
                         >
+                            Logout
+                        </button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <AlertDialog v-model:open="openModal">
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle
+                            >Yakin ingin log out ?</AlertDialogTitle
+                        >
+                        <AlertDialogDescription>
+                            Anda harus login kembali untuk dapat masuk ke
+                            aplikasi.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction as-child>
+                            <Link
+                                href="/logout"
+                                class="text-xs cursor-pointer bg-red-600 w-fit"
+                                >Logout</Link
+                            >
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     </nav>
 

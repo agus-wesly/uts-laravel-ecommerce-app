@@ -124,7 +124,7 @@ function onSubmit() {
                     </p>
                 </div>
 
-                <Button type="submit"> Sign Up </Button>
+                <Button type="submit"> Edit profile </Button>
             </fieldset>
         </form>
     </RootLayout>
