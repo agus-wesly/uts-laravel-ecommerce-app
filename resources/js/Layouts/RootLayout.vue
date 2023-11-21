@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import CartItem from "@/components/cart-item.vue";
 import { GithubIcon, SearchIcon, ShoppingCart } from "lucide-vue-next";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
 import { ref, computed } from "vue";
 
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Button from "@/components/ui/button/Button.vue";
 import { router } from "@inertiajs/vue3";
+import useUser from "@/composable/useUser";
 
 const products = [
     {
@@ -54,8 +55,7 @@ function handleSearch() {
     router.visit(hrefSearch.value);
 }
 
-const page = usePage();
-const user = computed(() => page.props.auth.user);
+const { user } = useUser();
 </script>
 
 <template>

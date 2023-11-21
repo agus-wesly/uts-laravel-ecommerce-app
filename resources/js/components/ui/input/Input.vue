@@ -9,6 +9,10 @@ const props = defineProps<{
     modelValue?: string | number;
 }>();
 
+defineOptions({
+    inheritAttrs: false,
+});
+
 const attrs = useAttrs();
 const hide = ref(false);
 
@@ -31,6 +35,7 @@ const modelValue = useVModel(props, "modelValue", emits, {
 <template>
     <div class="relative">
         <input
+            v-bind="$attrs"
             v-model="modelValue"
             :type="type"
             :class="
@@ -39,7 +44,6 @@ const modelValue = useVModel(props, "modelValue", emits, {
                     $attrs.class ?? ''
                 )
             "
-            v-bind="$attrs"
         />
 
         <button

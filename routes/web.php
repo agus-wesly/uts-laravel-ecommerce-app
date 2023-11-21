@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ProfileController;
 use Inertia\Inertia;
 
 
@@ -27,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::get('/product/{product}', [ProductController::class, 'show']);
     Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
    
 });
