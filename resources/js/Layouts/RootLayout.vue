@@ -12,29 +12,10 @@ import { Link } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
 import { ref, computed } from "vue";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
 import Button from "@/components/ui/button/Button.vue";
 import { router } from "@inertiajs/vue3";
-import useUser from "@/composable/useUser";
+import ModalConfirmationLogout from "./components/ModalConfirmationLogout.vue";
+import DropdownProfile from "./components/DropdownProfile.vue";
 
 const products = [
     {
@@ -68,8 +49,6 @@ const hrefSearch = computed(() => {
 function handleSearch() {
     router.visit(hrefSearch.value);
 }
-
-const { user } = useUser();
 </script>
 
 <template>
@@ -119,64 +98,10 @@ const { user } = useUser();
                     >
                 </SheetContent>
             </Sheet>
-            <DropdownMenu>
-                <DropdownMenuTrigger as-child>
-                    <Button
-                        variant="outline"
-                        class="rounded-full w-8 h-8 p-0 flex items-center justify-center overflow-hidden border"
-                    >
-                        <img
-                            :src="user.profile_url ?? '/img/profile.jpeg'"
-                            class="w-full h-full object-cover"
-                        />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent class="w-min font-semibold" align="end">
-                    <DropdownMenuLabel class="text-neutral-600">
-                        <p>@{{ user.username }}</p>
-                    </DropdownMenuLabel>
-                    <DropdownMenuItem>
-                        <Link
-                            href="/profile"
-                            class="text-xs cursor-pointer w-full"
-                            >Profile</Link
-                        >
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <button
-                            @click="openModal = true"
-                            variant="outline"
-                            class="text-xs text-left cursor-pointer w-full text-red-500"
-                        >
-                            Logout
-                        </button>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
 
-            <AlertDialog v-model:open="openModal">
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle
-                            >Yakin ingin log out ?</AlertDialogTitle
-                        >
-                        <AlertDialogDescription>
-                            Anda harus login kembali untuk dapat masuk ke
-                            aplikasi.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction as-child>
-                            <Link
-                                href="/logout"
-                                class="text-xs cursor-pointer bg-red-600 w-fit"
-                                >Logout</Link
-                            >
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <DropdownProfile @openModal="openModal = true" />
+
+            <ModalConfirmationLogout v-model:open="openModal" />
         </div>
     </nav>
 
