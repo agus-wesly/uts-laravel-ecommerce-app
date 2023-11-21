@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/{product}', [ProductController::class, 'show']);
     Route::get('/search', [SearchController::class, 'index'])->name('search');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile', [ProfileController::class, 'editProfile'])->name('edit-profile');
 
    
 });

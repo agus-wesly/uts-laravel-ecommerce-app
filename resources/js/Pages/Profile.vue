@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useUser from "@/composable/useUser";
+import { onUnmounted } from "vue";
 
 const { user } = useUser();
 
@@ -13,17 +14,35 @@ const form = useForm({
     email: user.value.email || "",
     username: user.value.username || "",
     name: user.value.name || "",
-    url_profile: user.value.url_profile || "",
+    profile_url: user.value.profile_url || "",
+    profile: null,
 });
 
 let isSubmitting = ref(false);
 
+let tempFilePofile = ref<File | null>(null);
+
 let profileSrc = computed(() => {
-    if (form.url_profile) return form.url_profile;
+    if (tempFilePofile.value) return URL.createObjectURL(tempFilePofile.value);
+    if (form.profile_url) return form.profile_url;
     return "/profile.jpeg";
 });
 
-function onSubmit() {}
+function handleFileInputChange(e: Event) {
+    let inputFile = e.currentTarget as HTMLInputElement;
+    let file = inputFile.files?.[0];
+    if (!file) return;
+
+    tempFilePofile.value = file;
+}
+
+function onSubmit() {
+    form.transform((data) => ({
+        ...data,
+        profile_url: profileSrc.value,
+        profile: tempFilePofile.value,
+    })).post("/profile");
+}
 </script>
 
 <template>
@@ -49,7 +68,13 @@ function onSubmit() {}
                 >
             </div>
             <fieldset :disabled="isSubmitting" class="grid gap-4">
-                <input type="file" class="hidden" id="file-input" />
+                <input
+                    name="profile_url"
+                    @change="handleFileInputChange"
+                    type="file"
+                    class="hidden"
+                    id="file-input"
+                />
                 <div class="grid gap-1">
                     <label for="name"> Name </label>
                     <Input

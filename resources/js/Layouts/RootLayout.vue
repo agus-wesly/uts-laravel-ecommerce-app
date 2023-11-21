@@ -111,7 +111,10 @@ const { user } = useUser();
                         variant="outline"
                         class="rounded-full w-8 h-8 p-0 flex items-center justify-center overflow-hidden border"
                     >
-                        <img src="/profile.jpeg" class="w-full h-full" />
+                        <img
+                            :src="user.profile_url ?? '/img/profile.jpeg'"
+                            class="w-full h-full object-cover"
+                        />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-min font-semibold" align="end">
