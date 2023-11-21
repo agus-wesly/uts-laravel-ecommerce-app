@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 use Inertia\Inertia;
 
 
@@ -33,3 +34,5 @@ Route::post('/register', [RegisterController::class, 'register'])->middleware('g
 
 // Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');

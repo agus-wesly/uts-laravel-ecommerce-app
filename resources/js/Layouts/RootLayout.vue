@@ -10,6 +10,7 @@ import CartItem from "@/components/cart-item.vue";
 import { GithubIcon, SearchIcon, ShoppingCart } from "lucide-vue-next";
 import { Link } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
+import { ref, computed } from "vue";
 
 import {
     DropdownMenu,
@@ -39,6 +40,13 @@ const products = [
         price: 200,
     },
 ];
+
+const inputValue = ref("");
+
+const hrefSearch = computed(() => {
+    if (!inputValue.value) return "#";
+    return `/search?q=${inputValue.value}`;
+});
 </script>
 
 <template>
@@ -51,10 +59,13 @@ const products = [
 
         <div class="flex items-center border p-1 px-2 rounded-lg w-44 md:w-fit">
             <Input
+                v-model="inputValue"
                 placeholder="Search Product..."
                 class="border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm"
             />
-            <SearchIcon class="w-4 h-4 text-neutral-500 flex-none" />
+            <a :href="hrefSearch">
+                <SearchIcon class="w-4 h-4 text-neutral-500 flex-none" />
+            </a>
         </div>
 
         <div class="flex items-center gap-2 md:gap-6">
