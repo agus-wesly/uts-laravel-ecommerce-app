@@ -21,18 +21,25 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/login', [LoginController::class, 'show'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/logout', [LoginController::class, 'logout']);
+    Route::get('/product/{product}', [ProductController::class, 'show']);
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+   
+});
+
+Route::middleware(['guest'])->group(function () {
+
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::get('/register', [RegisterController::class, 'show'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
+
+});
 
 
-Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
-Route::get('/register', [RegisterController::class, 'show'])->name('register')->middleware('guest');
-Route::post('/register', [RegisterController::class, 'register'])->middleware('guest');
 
-// Route::get('/products', [ProductController::class, 'index']);
-Route::get('/product/{product}', [ProductController::class, 'show']);
-
-Route::get('/search', [SearchController::class, 'index'])->name('search');

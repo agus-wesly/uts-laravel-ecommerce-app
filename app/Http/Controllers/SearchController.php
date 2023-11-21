@@ -20,6 +20,7 @@ class SearchController extends Controller
 
         return Inertia::render('Search', [
             'searchProduct' => $searchProduct,
+            'query' => $searchParam,
         ]);
     }
 }

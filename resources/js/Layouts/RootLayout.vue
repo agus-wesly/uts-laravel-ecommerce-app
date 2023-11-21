@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import CartItem from "@/components/cart-item.vue";
 import { GithubIcon, SearchIcon, ShoppingCart } from "lucide-vue-next";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
 import { ref, computed } from "vue";
 
@@ -16,9 +16,11 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Button from "@/components/ui/button/Button.vue";
+import { router } from "@inertiajs/vue3";
 
 const products = [
     {
@@ -47,6 +49,13 @@ const hrefSearch = computed(() => {
     if (!inputValue.value) return "#";
     return `/search?q=${inputValue.value}`;
 });
+
+function handleSearch() {
+    router.visit(hrefSearch.value);
+}
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
 </script>
 
 <template>
@@ -57,16 +66,19 @@ const hrefSearch = computed(() => {
             <h1 class="text-2xl font-extrabold flex-1">My Store</h1>
         </Link>
 
-        <div class="flex items-center border p-1 px-2 rounded-lg w-44 md:w-fit">
+        <form
+            @submit.prevent="handleSearch"
+            class="flex items-center border p-1 px-2 rounded-lg w-44 md:w-fit"
+        >
             <Input
                 v-model="inputValue"
                 placeholder="Search Product..."
                 class="border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm"
             />
-            <a :href="hrefSearch">
+            <button type="submit">
                 <SearchIcon class="w-4 h-4 text-neutral-500 flex-none" />
-            </a>
-        </div>
+            </button>
+        </form>
 
         <div class="flex items-center gap-2 md:gap-6">
             <Sheet>
@@ -103,6 +115,9 @@ const hrefSearch = computed(() => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-min font-semibold" align="end">
+                    <DropdownMenuLabel class="text-neutral-600">
+                        <p>@{{ user.username }}</p>
+                    </DropdownMenuLabel>
                     <DropdownMenuItem>
                         <Link
                             href="/profile"

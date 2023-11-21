@@ -22,6 +22,9 @@ class RegisterController extends Controller
             'name' => 'required|min:5|max:255' ,
         ]);
 
+        $credential['profile_url'] = '/profile.jpeg';
+        // dd($credential);
+
         $user = User::create($credential);
 
         return to_route('login');
