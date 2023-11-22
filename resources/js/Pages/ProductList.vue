@@ -2,11 +2,24 @@
 import RootLayout from "@/Layouts/RootLayout.vue";
 import ProductList from "@/components/product-list.vue";
 import { Button } from "@/components/ui/button";
+import useCart from "@/composable/useCart";
+import { computed } from "@vue/reactivity";
 
-defineProps<{
+let props = defineProps<{
     product: Product;
     relatedProduct: Product[];
 }>();
+
+let { isProductInCart, addItemToCart, removeItemFromCart } = useCart();
+let productInCart = computed(() => isProductInCart(props.product.id));
+
+function handleButtonProductClick() {
+    if (productInCart.value) {
+        removeItemFromCart(props.product.id);
+    } else {
+        addItemToCart({ ...props.product, qty: 1 });
+    }
+}
 </script>
 
 <template>
@@ -26,8 +39,13 @@ defineProps<{
                 </h3>
 
                 <div class="space-x-4">
-                    <Button>Buy now</Button>
-                    <Button variant="outline">Add to cart</Button>
+                    <Button
+                        @click="handleButtonProductClick"
+                        :variant="productInCart ? 'destructive' : ''"
+                        >{{
+                            productInCart ? "Remove from cart" : "Add to cart"
+                        }}</Button
+                    >
                 </div>
             </div>
         </div>

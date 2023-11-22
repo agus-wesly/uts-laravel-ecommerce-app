@@ -1,10 +1,23 @@
 <script setup lang="ts">
+import useCart from "@/composable/useCart";
 import { Button } from "./ui/button";
 import { Link } from "@inertiajs/vue3";
+import { computed } from "@vue/reactivity";
 
-defineProps<{
+let props = defineProps<{
     product: Product;
 }>();
+
+let { addItemToCart, removeItemFromCart, isProductInCart } = useCart();
+let productIsInCart = computed(() => isProductInCart(props.product.id));
+
+function handleClickProduct() {
+    if (productIsInCart.value) {
+        removeItemFromCart(props.product.id);
+    } else {
+        addItemToCart({ ...props.product, qty: 1 });
+    }
+}
 </script>
 
 <template>
@@ -23,10 +36,12 @@ defineProps<{
         <div class="flex justify-between items-center mt-3">
             <p class="font-bold w-fit text-xs">Rp. {{ product.price }}</p>
             <Button
+                @click="handleClickProduct"
                 variant="outline"
                 class="border-blue-700 text-blue-800 hover:bg-inherit hover:text-blue-700 text-xs py-2 h-fit"
-                >Add to cart</Button
             >
+                {{ productIsInCart ? "Remove from cart" : "Add to cart" }}
+            </Button>
         </div>
     </div>
 </template>

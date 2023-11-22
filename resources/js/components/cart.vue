@@ -10,14 +10,33 @@ import { ShoppingCart } from "lucide-vue-next";
 import CartItem from "./cart-item.vue";
 import { Button } from "./ui/button";
 import useCart from "@/composable/useCart";
+import { computed } from "vue";
 
-let { cartItemData, cartItemTotal } = useCart();
+let { cartItemData } = useCart();
+
+let cartItemTotal = computed(() =>
+    cartItemData.value.reduce<number>((acc, item) => {
+        let totalPerItem = item.qty * item.price;
+
+        return acc + totalPerItem;
+    }, 0)
+);
+
+let cartItemLength = computed(() => cartItemData.value.length);
 </script>
 
 <template>
     <Sheet>
-        <SheetTrigger>
-            <ShoppingCart />
+        <SheetTrigger as-child>
+            <button class="relative">
+                <ShoppingCart />
+                <span
+                    v-if="!!cartItemLength"
+                    class="absolute w-4 h-4 rounded-full bg-red-600 text-white font-bold text-[8px] flex items-center justify-center -top-[9px] -right-1"
+                >
+                    {{ cartItemLength }}
+                </span>
+            </button>
         </SheetTrigger>
         <SheetContent class="overflow-y-scroll">
             <SheetHeader class="my-5">
