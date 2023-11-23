@@ -40,7 +40,7 @@ function handleClickProduct() {
                 variant="outline"
                 class="border-blue-700 text-blue-800 hover:bg-inherit hover:text-blue-700 text-xs py-2 h-fit"
             >
-                {{ productIsInCart ? "Remove from cart" : "Add to cart" }}
+                {{ productIsInCart ? "Remove" : "Add to cart" }}
             </Button>
         </div>
     </div>

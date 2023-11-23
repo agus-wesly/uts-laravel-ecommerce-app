@@ -1,8 +1,14 @@
-import { ref, readonly } from "vue";
+import { ref, readonly, onMounted, watch, watchEffect } from "vue";
 
 export type CartItem = Omit<Product, "type_id" | "type">;
 
 let cartItem = ref<CartItem[]>([]);
+
+let firstRender = false;
+
+function syncToLocalStorage() {
+    localStorage.setItem("cart", JSON.stringify(cartItem.value));
+}
 
 export default function useCart() {
     function addItemToCart(newItem: CartItem) {
@@ -14,6 +20,7 @@ export default function useCart() {
             return;
         }
         cartItem.value.push(newItem);
+        syncToLocalStorage();
     }
 
     function decreaseItem(id: number) {
@@ -24,18 +31,23 @@ export default function useCart() {
             return;
         }
         foundItem.qty -= 1;
+
+        syncToLocalStorage();
     }
 
     function increaseItem(id: number) {
         let foundItem = cartItem.value.find((cartItem) => cartItem.id === id);
         if (!foundItem) return;
         foundItem.qty += 1;
+
+        syncToLocalStorage();
     }
 
     function removeItemFromCart(id: number) {
         cartItem.value = cartItem.value.filter(
             (cartItem) => cartItem.id !== id
         );
+        syncToLocalStorage();
     }
 
     function getItemById(id: number) {
@@ -46,6 +58,17 @@ export default function useCart() {
         let foundItem = cartItem.value.find((cartItem) => cartItem.id === id);
         return !!foundItem;
     }
+
+    onMounted(() => {
+        if (!firstRender) {
+            const cartItemFromLocalStorage = JSON.parse(
+                localStorage.getItem("cart") || "[]"
+            );
+            cartItem.value = cartItemFromLocalStorage;
+
+            firstRender = true;
+        }
+    });
 
     return {
         decreaseItem,

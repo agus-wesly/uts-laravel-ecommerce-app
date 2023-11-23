@@ -11,6 +11,7 @@ import CartItem from "./cart-item.vue";
 import { Button } from "./ui/button";
 import useCart from "@/composable/useCart";
 import { computed } from "vue";
+import { router } from "@inertiajs/vue3";
 
 let { cartItemData } = useCart();
 
@@ -53,9 +54,13 @@ let cartItemLength = computed(() => cartItemData.value.length);
                 <h5>SUBTOTAL</h5>
                 <p class="text-sm font-bold">Rp. {{ cartItemTotal }}</p>
             </div>
-            <Button class="w-full mb-10 text-xs py-6 font-bold"
-                >CHECKOUT</Button
+            <Button
+                @click="router.visit('/checkout')"
+                :disabled="!cartItemLength"
+                class="w-full mb-10 text-xs py-6 font-bold"
             >
+                CHECKOUT
+            </Button>
         </SheetContent>
     </Sheet>
 </template>
