@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import type { CartItem } from "@/composable/useCart";
 import useCart from "@/composable/useCart";
+import { X } from "lucide-vue-next";
 
 defineProps<{
     product: CartItem;
 }>();
 
-let { increaseItem, decreaseItem } = useCart();
+let { increaseItem, decreaseItem, removeItemFromCart } = useCart();
 </script>
 
 <template>
-    <div class="flex justify-between gap-10">
+    <div class="flex justify-between gap-10 relative">
         <img
             :src="product.product_url"
             class="aspect-[9/10] object-cover w-28"
@@ -42,5 +43,12 @@ let { increaseItem, decreaseItem } = useCart();
                 <p class="text-sm font-bold">Rp. {{ product.price }}</p>
             </div>
         </div>
+
+        <button
+            @click="() => removeItemFromCart(product.id)"
+            class="absolute top-0 right-0"
+        >
+            <X class="w-4 h-4 text-neutral-500" />
+        </button>
     </div>
 </template>

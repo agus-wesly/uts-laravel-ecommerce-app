@@ -12,16 +12,19 @@ import { Button } from "./ui/button";
 import useCart from "@/composable/useCart";
 import { computed } from "vue";
 import { router } from "@inertiajs/vue3";
+import formatCurrency from "@/utils/formatCurrency";
 
 let { cartItemData } = useCart();
 
-let cartItemTotal = computed(() =>
-    cartItemData.value.reduce<number>((acc, item) => {
+let cartItemTotal = computed(() => {
+    let total = cartItemData.value.reduce<number>((acc, item) => {
         let totalPerItem = item.qty * item.price;
 
         return acc + totalPerItem;
-    }, 0)
-);
+    }, 0);
+
+    return formatCurrency(total);
+});
 
 let cartItemLength = computed(() => cartItemData.value.length);
 </script>

@@ -9,6 +9,10 @@ type Product = {
     type: TypeProduct;
 };
 
+type Order = {
+    address: string;
+};
+
 type TypeProduct = {
     id: number;
     name: string;

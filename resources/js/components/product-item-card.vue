@@ -37,8 +37,12 @@ function handleClickProduct() {
             <p class="font-bold w-fit text-xs">Rp. {{ product.price }}</p>
             <Button
                 @click="handleClickProduct"
-                variant="outline"
-                class="border-blue-700 text-blue-800 hover:bg-inherit hover:text-blue-700 text-xs py-2 h-fit"
+                :variant="productIsInCart ? 'destructive' : 'outline'"
+                class="text-xs py-2 h-fit"
+                :class="{
+                    'border-blue-700 text-blue-800 hover:bg-inherit hover:text-blue-700':
+                        !productIsInCart,
+                }"
             >
                 {{ productIsInCart ? "Remove" : "Add to cart" }}
             </Button>
