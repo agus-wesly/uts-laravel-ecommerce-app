@@ -1,4 +1,4 @@
-import { ref, readonly, onMounted, watch, watchEffect } from "vue";
+import { ref, readonly, onMounted } from "vue";
 
 export type CartItem = Omit<Product, "type_id" | "type">;
 
