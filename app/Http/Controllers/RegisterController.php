@@ -23,7 +23,6 @@ class RegisterController extends Controller
         ]);
 
         $credential['profile_url'] = '/profile.jpeg';
-        // dd($credential);
 
         $user = User::create($credential);
 

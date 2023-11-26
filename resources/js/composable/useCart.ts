@@ -59,6 +59,11 @@ export default function useCart() {
         return !!foundItem;
     }
 
+    function resetCart() {
+        cartItem.value = [];
+        syncToLocalStorage();
+    }
+
     onMounted(() => {
         if (!firstRender) {
             const cartItemFromLocalStorage = JSON.parse(
@@ -78,5 +83,6 @@ export default function useCart() {
         getItemById,
         isProductInCart,
         cartItemData: readonly(cartItem),
+        resetCart,
     };
 }

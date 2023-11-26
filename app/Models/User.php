@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -47,8 +48,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     
-    public function customer(): HasOne
+    public function orders(): HasMany
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasMany(Order::class);
     }
 }

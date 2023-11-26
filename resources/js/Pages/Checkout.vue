@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import useCart from "@/composable/useCart";
 import { computed } from "@vue/reactivity";
-import { ref } from "vue";
 import formatCurrency from "@/utils/formatCurrency";
+import { useForm } from "@inertiajs/vue3";
 
-let address = ref("");
+let form = useForm({
+    address: "",
+});
+
 let { cartItemData } = useCart();
+
 let totalPrice = computed(() => {
     let total = cartItemData.value.reduce<number>((acc, item) => {
         let totalPerItem = item.qty * item.price;
@@ -16,19 +20,34 @@ let totalPrice = computed(() => {
         return acc + totalPerItem;
     }, 0);
 
-    return formatCurrency(total);
+    return total;
 });
+
+let formattedTotalPrice = computed(() => formatCurrency(totalPrice.value));
+
+function onSubmit() {
+    form.transform((data) => ({
+        ...data,
+        items: cartItemData.value,
+        total: totalPrice.value,
+    })).post("/order");
+}
 </script>
 
 <template>
     <RootLayout>
-        <div class="mt-5 space-y-4">
+        <form @submit.prevent="onSubmit" class="mt-5 space-y-4">
             <Label>Silahkan masukkan alamat anda : </Label>
 
             <textarea
-                v-model="address"
+                v-model="form.address"
+                name="address"
                 class="w-full border border-border rounded-xl p-2 px-3 text-sm resize-none min-h-[112px]"
             />
+
+            <p class="text-xs text-pink-600" v-if="form.errors.address">
+                {{ form.errors.address }}
+            </p>
 
             <div class="flex flex-col w-full gap-4">
                 <div class="flex justify-between border-b pb-4">
@@ -73,11 +92,13 @@ let totalPrice = computed(() => {
                 <div class="mt-6 flex justify-end gap-8 items-center">
                     <p class="text-md">Total Pembayaran :</p>
 
-                    <h1 class="text-xl font-bold">Rp. {{ totalPrice }}</h1>
+                    <h1 class="text-xl font-bold">
+                        Rp. {{ formattedTotalPrice }}
+                    </h1>
                 </div>
 
-                <Button class="mt-6">Pesan</Button>
+                <Button type="submit" class="mt-6">Pesan</Button>
             </div>
-        </div>
+        </form>
     </RootLayout>
 </template>

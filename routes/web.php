@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 use Inertia\Inertia;
 
 
@@ -32,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'editProfile'])->name('edit-profile');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/order', [OrderController::class, 'create'])->name('create-order');
+    Route::get('/order', [OrderController::class, 'create'])->name('show-order');
    
 });
 
