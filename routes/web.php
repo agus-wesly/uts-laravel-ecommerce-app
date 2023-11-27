@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile', [ProfileController::class, 'editProfile'])->name('edit-profile');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/order', [OrderController::class, 'create'])->name('create-order');
-    Route::get('/order', [OrderController::class, 'create'])->name('show-order');
+    Route::get('/order', [OrderController::class, 'show'])->name('show-order');
    
 });
 

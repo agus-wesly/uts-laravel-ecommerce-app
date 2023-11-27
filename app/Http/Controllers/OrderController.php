@@ -9,8 +9,18 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function show() {
+        $user = Auth::user();
+        $orders = $user->orders()->with([
+            'orderDetails:order_id,product_id,quantity' => [
+                'product:id,product_url,type_id,name,price' => [
+                    'type:id,name'
+                ],
+            ],
+        ])->get();
+
 
         return Inertia::render('Order', [
+            'orders' => $orders,
         ]);
     }
 
@@ -39,7 +49,7 @@ class OrderController extends Controller
         $order->orderDetails()->createMany($items);
 
 
-        return to_route('checkout');
+        return to_route('show-order')->with('message', 'ordered');
        
     }
 }
