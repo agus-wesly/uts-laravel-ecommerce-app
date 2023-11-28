@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GithubIcon, SearchIcon, ShoppingCart } from "lucide-vue-next";
+import { GithubIcon, SearchIcon } from "lucide-vue-next";
 import { Link } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
 import { ref, computed } from "vue";

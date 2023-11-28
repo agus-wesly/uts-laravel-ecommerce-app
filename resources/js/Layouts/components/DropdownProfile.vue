@@ -41,6 +41,11 @@ defineEmits<{
                 >
             </DropdownMenuItem>
             <DropdownMenuItem>
+                <Link href="/order" class="text-xs cursor-pointer w-full"
+                    >Semua Pesanan</Link
+                >
+            </DropdownMenuItem>
+            <DropdownMenuItem>
                 <button
                     @click="$emit('openModal')"
                     variant="outline"

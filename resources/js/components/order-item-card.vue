@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import formatCurrency from "@/utils/formatCurrency";
 import { computed } from "vue";
+import { Button } from "./ui/button";
+
 let props = defineProps<{
     order: Order;
     totalPrice: number;
+}>();
+
+defineEmits<{
+    (e: "showModal", id: number): void;
 }>();
 
 let orderDate = computed(() => {
@@ -19,7 +25,15 @@ let orderDate = computed(() => {
 
 <template>
     <div class="mt-8 flex flex-col gap-5">
-        <p class="border-b pb-3">{{ orderDate }}</p>
+        <div class="flex justify-between items-center border-b pb-3">
+            <p>{{ orderDate }}</p>
+            <Button
+                @click="() => $emit('showModal', order.id)"
+                class="text-xs h-min"
+                variant="destructive"
+                >Batalkan pesanan</Button
+            >
+        </div>
 
         <div class="flex justify-between border-b pb-4">
             <h2 class="text-sm font-semibold flex-[2]">Produk Dipesan</h2>
@@ -58,7 +72,7 @@ let orderDate = computed(() => {
         </ul>
 
         <p class="flex-1 font-semibold self-end">
-            Rp. {{ formatCurrency(totalPrice) }}
+            Total : Rp. {{ formatCurrency(totalPrice) }}
         </p>
     </div>
 </template>

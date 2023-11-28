@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OrderDetail;
 
 class OrderController extends Controller
 {
@@ -51,5 +52,16 @@ class OrderController extends Controller
 
         return to_route('show-order')->with('message', 'ordered');
        
+    }
+
+    public function delete(Request $request) {
+        $validated = $request->validate([
+            'activeId' => 'required'
+
+        ]);
+        $user = Auth::user();
+        $orders = $user->orders();
+        $orders->where('id', $validated['activeId'])->delete();
+        return to_route('show-order');
     }
 }

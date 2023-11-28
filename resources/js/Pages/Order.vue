@@ -2,17 +2,55 @@
 import RootLayout from "@/Layouts/RootLayout.vue";
 import OrderItemCard from "@/components/order-item-card.vue";
 import useCart from "@/composable/useCart";
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { useForm } from "@inertiajs/vue3";
 
 let props = defineProps<{ orders: Order[]; flash?: { message?: string } }>();
 let { resetCart } = useCart();
+
+let activeOrderIdToBeCanceled = ref<number | null>(null);
+
+let form = useForm({
+    activeId: null,
+});
+
+let isActiveCancelModal = computed(() => !!activeOrderIdToBeCanceled.value);
 
 onMounted(() => {
     if (props.flash?.message === "ordered") {
         resetCart();
     }
 });
+
+function handleShowModal(id: number) {
+    activeOrderIdToBeCanceled.value = id;
+}
+
+function handleCloseModal(open: boolean) {
+    activeOrderIdToBeCanceled.value = null;
+}
+
+function handleCancelOrder(e: Event) {
+    form.transform((data) => {
+        console.log("d", activeOrderIdToBeCanceled.value);
+        return {
+            activeId: activeOrderIdToBeCanceled.value,
+        };
+    }).delete("/order");
+    activeOrderIdToBeCanceled.value = null;
+}
 </script>
 
 <template>
@@ -34,7 +72,29 @@ onMounted(() => {
                 :key="order.id"
                 :order="order"
                 :totalPrice="order.total"
+                @showModal="handleShowModal"
             />
         </div>
     </RootLayout>
+
+    <AlertDialog :open="isActiveCancelModal" @update:open="handleCloseModal">
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <AlertDialogTitle>Batalkan Pesanan ini ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Pesanan akan dihapus secara permanen. ID
+                    {{ activeOrderIdToBeCanceled }}
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogCancel class="flex-1">Cancel</AlertDialogCancel>
+                <Button
+                    @click="handleCancelOrder"
+                    size="sm"
+                    class="flex-1 bg-red-600"
+                    >Batalkan Pesanan</Button
+                >
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
 </template>
