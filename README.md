@@ -76,7 +76,7 @@ php artisan migrate
 php artisan db:seed
 ```
 
-#### Run in dev mode & you good to go
+#### Run the app
 
 ```
 php artisan serve
@@ -85,4 +85,10 @@ php artisan serve
 ```
 // Open this in another terminal
 npm run dev
+```
+
+### Open this link in your browsser
+
+```
+http://127.0.0.1:8000
 ```
