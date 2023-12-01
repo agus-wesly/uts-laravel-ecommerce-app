@@ -65,9 +65,13 @@ let orderDate = computed(() => {
                 <p class="flex-1">
                     {{ orderDetail.quantity }}
                 </p>
-                <p class="flex-1 font-semibold">
-                    {{ order.status }}
-                </p>
+                <div class="flex-1 font-semibold">
+                    <p
+                        class="bg-yellow-200 text-yellow-800 rounded-full p-1 w-8 h-8 flex items-center justify-center"
+                    >
+                        {{ order.status }}
+                    </p>
+                </div>
             </div>
         </ul>
 

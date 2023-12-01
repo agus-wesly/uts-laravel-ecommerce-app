@@ -6,7 +6,6 @@ import { onMounted, ref, computed } from "vue";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -44,7 +43,6 @@ function handleCloseModal(open: boolean) {
 
 function handleCancelOrder(e: Event) {
     form.transform((data) => {
-        console.log("d", activeOrderIdToBeCanceled.value);
         return {
             activeId: activeOrderIdToBeCanceled.value,
         };
@@ -67,7 +65,12 @@ function handleCancelOrder(e: Event) {
         <div class="mt-5">
             <h1>List pesanan anda :</h1>
 
+            <p class="mt-5 text-muted-foreground" v-if="!orders.length">
+                Belum ada pesanan. Silahkan mulai memesan
+            </p>
+
             <OrderItemCard
+                v-else
                 v-for="order in orders"
                 :key="order.id"
                 :order="order"
