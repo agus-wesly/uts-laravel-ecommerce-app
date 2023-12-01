@@ -10,6 +10,14 @@ Projek ini dibuat sebagai salah satu syarat mengikuti UTS mata kuliah Penerapan 
 -   Tailwind.css
 -   Shadcn-ui (Radix vue + Tailwind)
 
+## Prerequisites
+
+-   PHP v.8.1.2 or above
+-   Composer v.2.5.8 or above
+-   Node.js v.18.17.1 or above
+-   NPM v.9.6.7 or above
+-   MySQL
+
 ## Get started
 
 #### Clone Repo
