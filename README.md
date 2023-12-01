@@ -64,23 +64,22 @@ DB_PASSWORD=
 php artisan key:generate
 ```
 
-#### Generate a new JWT authentication key
-
-```
-php artisan jwt:generate
-```
-
 #### Run the database migrations **(Remember to set the database connection in .env before migrating)**
 
 ```
 php artisan migrate
 ```
 
+### Run the seeder
+
+```
+php artisan db:seed
+```
+
 #### Run in dev mode & you good to go
 
 ```
 php artisan serve
-
 ```
 
 ```
