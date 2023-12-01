@@ -1,6 +1,6 @@
 ## About this repo
 
-Projek ini dibuat sebagai salah satu syarat mengikuti UTS mata kuliah Penerapan Teknologi Internet Universitas Komputer Indonesia. Projek berupa aplikasi e-commerce berbasis web sederhana yang menggunakan beberapa teknologi web framework.
+Project ini dibuat sebagai salah satu syarat mengikuti UTS mata kuliah Penerapan Teknologi Internet Universitas Komputer Indonesia. Project berupa aplikasi e-commerce berbasis web sederhana yang menggunakan beberapa teknologi web framework.
 
 ## Tech Stack
 
@@ -23,17 +23,20 @@ Projek ini dibuat sebagai salah satu syarat mengikuti UTS mata kuliah Penerapan 
 #### Clone Repo
 
 ```
-git clone git@github.com:agus-wesly/uts-laravel-ecommerce-app.git
+git clone git@github.com:agus-wesly/uts-laravel-ecommerce-app.git laravel-my-ecommerce
 ```
 
-#### Install dependencies
-
 ```
-composer install
-npm install
+cd laravel-my-ecommerce
 ```
 
-#### Fill the db configuration in .env file
+#### Copy env.example and rename it to .env
+
+```
+cp -i .env.example .env
+```
+
+#### Now fill this db configuration in .env file
 
 ```
 DB_CONNECTION=
@@ -43,6 +46,13 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 
+```
+
+#### Install dependencies
+
+```
+composer install
+npm install
 ```
 
 #### Run in dev mode & you good to go
