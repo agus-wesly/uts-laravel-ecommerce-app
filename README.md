@@ -30,6 +30,16 @@ git clone git@github.com:agus-wesly/uts-laravel-ecommerce-app.git laravel-my-eco
 cd laravel-my-ecommerce
 ```
 
+#### Install dependencies
+
+```
+composer install
+```
+
+```
+npm install
+```
+
 #### Copy env.example and rename it to .env
 
 ```
@@ -48,11 +58,22 @@ DB_PASSWORD=
 
 ```
 
-#### Install dependencies
+#### Generate a new application key
 
 ```
-composer install
-npm install
+php artisan key:generate
+```
+
+#### Generate a new JWT authentication key
+
+```
+php artisan jwt:generate
+```
+
+#### Run the database migrations **(Remember to set the database connection in .env before migrating)**
+
+```
+php artisan migrate
 ```
 
 #### Run in dev mode & you good to go
@@ -60,6 +81,9 @@ npm install
 ```
 php artisan serve
 
+```
+
+```
 // Open this in another terminal
 npm run dev
 ```
